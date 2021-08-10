@@ -415,7 +415,7 @@ else
 		end
 		--if not args[1] then print('/newdoor [doortype] [locked] [jobs]\nDoortypes: door, sliding, garage, double, doublesliding\nLocked: true or false\nJobs: Up to four can be added with the command') return end
 		if arg then doorType = arg.doortype else doorType = args[1] end
-		if arg then doorLocked = arg.doorlocked else doorLocked = not not args[1] end
+		if arg then doorLocked = arg.doorlocked else doorLocked = not not args[2] end
 		local validTypes = {['door']=true, ['sliding']=true, ['garage']=true, ['double']=true, ['doublesliding']=true}
 		if not validTypes[doorType] then print(doorType.. ' is not a valid doortype') return end
 		if arg and arg.item == '' and arg.job1 == '' then print('You must enter either a job or item for lock authorisation') return end
@@ -450,12 +450,13 @@ else
 				jobs[2] = args[4]
 				jobs[3] = args[5]
 				jobs[4] = args[6]
+				item = false
 			else
 				if arg.job1 ~= '' then jobs[1] = arg.job1 end
 				if arg.job2 ~= '' then jobs[2] = arg.job2 end
 				if arg.job3 ~= '' then jobs[3] = arg.job3 end
 				if arg.job4 ~= '' then jobs[4] = arg.job4 end
-				if arg.item ~= '' then item = arg.item end
+				if arg.item ~= '' then item = arg.item else item = false end
 			end
 			local maxDistance, slides, garage = 2.0, false, false
 			if doorType == 'sliding' then slides = true
@@ -507,12 +508,13 @@ else
 				jobs[2] = args[4]
 				jobs[3] = args[5]
 				jobs[4] = args[6]
+				item = false
 			else
 				if arg.job1 ~= '' then jobs[1] = arg.job1 end
 				if arg.job2 ~= '' then jobs[2] = arg.job2 end
 				if arg.job3 ~= '' then jobs[3] = arg.job3 end
 				if arg.job4 ~= '' then jobs[4] = arg.job4 end
-				if arg.item ~= '' then item = arg.item end
+				if arg.item ~= '' then item = arg.item else item = false end
 			end
 			local maxDistance, slides, garage = 2.5, false, false
 			if doorType == 'sliding' or doorType == 'doublesliding' then slides = true end
