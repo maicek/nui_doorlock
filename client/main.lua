@@ -29,7 +29,7 @@ else
 			if (not specificDoor or doorID == specificDoor) then
 				if data.doors then
 					for k,v in pairs(data.doors) do
-						if #(playerCoords - v.objCoords) < 30 then Citizen.Wait(1)
+						if #(playerCoords - v.objCoords) < 30 then Citizen.Wait(0)
 							v.object = GetClosestObjectOfType(v.objCoords, 1.0, v.objHash, false, false, false)
 							if data.delete then
 								SetEntityAsMissionEntity(v.object, 1, 1)
@@ -51,7 +51,7 @@ else
 						elseif v.object then RemoveDoorFromSystem(v.doorHash) nearbyDoors[doorID] = nil end
 					end
 				elseif not data.doors then
-					if #(playerCoords - data.objCoords) < 30 then Citizen.Wait(2)
+					if #(playerCoords - data.objCoords) < 30 then Citizen.Wait(0)
 						if data.slides then data.object = GetClosestObjectOfType(data.objCoords, 5.0, data.objHash, false, false, false) else
 							data.object = GetClosestObjectOfType(data.objCoords, 1.0, data.objHash, false, false, false)
 						end
@@ -127,11 +127,12 @@ else
 			UpdateDoors()
 			while ESX.PlayerLoaded do
 				playerCoords = GetEntityCoords(ESX.PlayerData.ped)
-				local doorSleep = 1000
+				local doorSleep = 400
 				if not closestDoor.id then
 					local distance = #(playerCoords - lastCoords)
 					if distance > 30 then
 						UpdateDoors()
+						doorSleep = 1000
 					else
 						closestDoor.distance = 30
 						for k in pairs(nearbyDoors) do
@@ -145,7 +146,6 @@ else
 									end
 								end
 							end
-							Citizen.Wait(5)
 						end
 					end
 				end
@@ -189,11 +189,11 @@ else
 								end
 								break
 							end
-							Citizen.Wait(5)
+							Citizen.Wait(0)
 						end
 					end
 					closestDoor = {}
-					doorSleep = 5
+					doorSleep = 0
 				end
 				Citizen.Wait(doorSleep)
 			end
@@ -229,7 +229,7 @@ else
 			Config.DoorList[doorID].locked = locked
 			UpdateDoors(doorID)
 			while true do
-				Citizen.Wait(5)
+				Citizen.Wait(0)
 				if Config.DoorList[doorID].doors then
 					for k, v in pairs(Config.DoorList[doorID].doors) do
 						if not IsDoorRegisteredWithSystem(v.doorHash) then return end -- If door is not registered end the loop
@@ -298,7 +298,7 @@ else
 	function loadAnimDict(dict)
 		while (not HasAnimDictLoaded(dict)) do
 			RequestAnimDict(dict)
-			Citizen.Wait(5)
+			Citizen.Wait(0)
 		end
 	end
 
@@ -411,7 +411,7 @@ else
 			receivedDoorData = false
 			SetNuiFocus(true, true)
 			SendNUIMessage({type = "newDoorSetup", enable = true})
-			while receivedDoorData == false do Citizen.Wait(5) DisableAllControlActions(0) end
+			while receivedDoorData == false do Citizen.Wait(0) DisableAllControlActions(0) end
 		end
 		--if not args[1] then print('/newdoor [doortype] [locked] [jobs]\nDoortypes: door, sliding, garage, double, doublesliding\nLocked: true or false\nJobs: Up to four can be added with the command') return end
 		if arg then doorType = arg.doortype else doorType = args[1] end
