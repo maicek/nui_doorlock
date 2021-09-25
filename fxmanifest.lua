@@ -1,15 +1,15 @@
 fx_version 'cerulean'
 games { 'gta5' }
 
-version '2.0.1'
+version '2.0.2'
 description 'https://github.com/thelindat/nui_doorlock'
-versioncheck 'https://raw.githubusercontent.com/thelindat/nui_doorlock/main/fxmanifest.lua'
+versioncheck 'https://raw.githubusercontent.com/maicek/nui_doorlock/main/fxmanifest.lua'
 
-shared_script '@es_extended/imports.lua'
+-- shared_script '@es_extended/imports.lua'
 
 server_scripts {
 	'config.lua',
-	'configs/**/*.lua',
+	-- 'configs/**/*.lua',
 	'server/main.lua'
 }
 
@@ -26,8 +26,7 @@ ui_page {
 
 files {
 	'html/door.html',
-	'html/main.js', 
+	'html/main.js',
 	'html/style.css',
-
 	'html/sounds/*.ogg',
 }
